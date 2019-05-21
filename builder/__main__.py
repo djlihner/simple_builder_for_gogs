@@ -1,26 +1,18 @@
-import builder
+import sys
 
-from json import loads
-from flask import Flask, request, abort
-
-
-app = Flask(__name__)
+from builder import env_builder
+from builder import server
 
 
-@app.route("/builder_event", methods=['POST'])
-def deploying_build():
-    try:
-        payload = loads(request.data)
-
-        git_repository_url = payload['repository']['clone_url']
-        repository_branch_name = (payload['ref']).split("/")[2]
-
-        builder.deploying_build(git_repository_url, repository_branch_name)
-    except ConnectionError:
-        abort(400)
-    return "Build Complete!"
-
+def main():
+    mode_or_url = sys.argv[1]
+    if mode_or_url == 'server_mode':
+        server.run()
+    else:
+        env_builder.check_push_thread(mode_or_url)
 
 if __name__ == "__main__":
-    app.run(port=4567, debug=True)
-
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Stop")
