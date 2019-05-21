@@ -77,6 +77,3 @@ def __run_code_analysis():
         build_env.project_dir,
         build_env.pylint_report_path))
     log.info("Done! Report created in {}".format(build_env.build_report_dir))
-
-if __name__ == "__main__":
-    check_push_thread("http://localhost:3000/administrator/Hello_World.git")
