@@ -11,6 +11,7 @@ def main():
     else:
         env_builder.check_push_thread(mode_or_url)
 
+
 if __name__ == "__main__":
     try:
         main()
